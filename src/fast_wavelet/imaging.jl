@@ -52,10 +52,10 @@ function load_image(name,n, m = n, gpu=0,square = 0 )
 				resized_name = split(name,"/")
 				resized_name = "resized_"*resized_name[size(resized_name)[1]]
     		Images.save(resized_name,imresize(f,(n,m1)))
-    		f = convert(Array{Float64},PyPlot.imread(resized_name));
+    		f = convert(Array{Float64},Images.load(resized_name));
     		rm(resized_name)
 		else
-				f = PyPlot.imread(name);
+				f = Images.load(name);
 				f = resize_image(f, n);
 		end
 		return f;
