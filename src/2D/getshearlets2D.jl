@@ -59,7 +59,7 @@ function getwedgebandpasslowpassfilters2D(rows::Int,cols::Int,shearLevels,direct
 
         # Lets compute the filters in the other scales
         for j = (size(filterHigh)[2]-1):-1:1
-            filterLow[j] = conv2(filterLow[size(filterLow,2)],upsample(filterLow[j+1],1,1,1))
+            filterLow[j] = conv(filterLow[size(filterLow,2)],upsample(filterLow[j+1],1,1,1))
             filterHigh[j] = conv(filterLow[size(filterLow,2)],upsample(filterHigh[j+1],1,1,1))
         end
 
@@ -117,7 +117,7 @@ function getwedgebandpasslowpassfilters2D(rows::Int,cols::Int,shearLevels,direct
             #remove high frequencies along the y-direction in the frequency domain.
             #by convolving the upsampled directional filter with a lowpass filter in y-direction, we remove all
             #but the central wedge in the frequency domain.
-            wedgeHelp = conv2(directionalFilterUpsampled, filterLow2[size(filterLow2,2)-shearLevel][:,:])
+            wedgeHelp = conv(directionalFilterUpsampled, filterLow2[size(filterLow2,2)-shearLevel][:,:])
             wedgeHelp = padarray(wedgeHelp,[rows,cols],1);
             #please note that wedgeHelp now corresponds to
             #conv(p_j,h_(J-j*alpha_j/2)') in the language of the paper. to see
@@ -172,7 +172,7 @@ function getwedgebandpasslowpassfilters2D(rows::Int,cols::Int,shearLevels,direct
             #by convolving the upsampled directional filter with a lowpass filter in y-direction, we remove all
             #but the central wedge in the frequency domain.
 
-            wedgeHelp = conv2(directionalFilterUpsampled, filterLow2[size(filterLow2,2)-shearLevel][:,:])
+            wedgeHelp = conv(directionalFilterUpsampled, filterLow2[size(filterLow2,2)-shearLevel][:,:])
             wedgeHelp = padarray(wedgeHelp,[rows,cols]);
 
             #please note that wedgeHelp now corresponds to
